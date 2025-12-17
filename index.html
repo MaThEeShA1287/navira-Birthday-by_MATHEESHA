@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Navira 🎉</title>
+ <link rel="icon" type="image/x-icon" href="p1.jpg">
+<style>
+:root{
+    --c1:#ff6ec4;
+    --c2:#7873f5;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+    background:linear-gradient(135deg,var(--c1),var(--c2));
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    overflow:hidden;
+    transition:0.6s;
+}
+
+.container{
+    width:100%;
+    max-width:420px;
+    padding:20px;
+    text-align:center;
+    z-index:2;
+}
+
+.card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(14px);
+    border-radius:24px;
+    padding:20px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
+}
+
+h1{font-size:28px;}
+.subtitle{font-size:14px;opacity:0.9;}
+
+.photo-box{
+    width:160px;height:160px;margin:18px auto;
+    border-radius:50%;overflow:hidden;
+    border:4px solid rgba(255,255,255,0.5);
+}
+.photo-box img{width:100%;height:100%;object-fit:cover;}
+
+.wish{font-size:15px;line-height:1.6;margin:15px 0;}
+
+.controls button{
+    margin:6px;padding:10px 16px;
+    border-radius:20px;border:none;
+    background:#fff;color:#333;
+    cursor:pointer;
+}
+
+/* 🎁 Gift */
+.gift{
+    width:120px;height:120px;
+    margin:15px auto;
+    background:#ff3c6f;
+    border-radius:16px;
+    position:relative;
+    cursor:pointer;
+    animation:bounce 1.5s infinite;
+}
+.gift::before{
+    content:"";
+    position:absolute;
+    width:20px;height:100%;
+    background:#ffd700;
+    left:50%;transform:translateX(-50%);
+}
+.gift::after{
+    content:"";
+    position:absolute;
+    width:100%;height:20px;
+    background:#ffd700;
+    top:50%;transform:translateY(-50%);
+}
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+.opened{animation:none;transform:scale(0);transition:0.6s;}
+
+/* 🎆 Fireworks */
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:1;
+}
+
+/* Calendar */
+.calendar{
+    margin-top:15px;
+    background:rgba(0,0,0,0.25);
+    padding:12px;border-radius:16px;
+}
+.days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:6px;font-size:12px;
+}
+.day{padding:6px;border-radius:8px;background:rgba(255,255,255,0.15);}
+.birthday{
+    background:#ffd700;color:#000;font-weight:bold;
+    animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.15);}
+    100%{transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div class="container">
+<div class="card">
+
+<h1>🎉 Happy Birthday 🎂</h1>
+<div class="subtitle">Navira Bimsath</div>
+
+<div class="photo-box">
+    <img id="photo">
+</div>
+
+<div class="wish">
+Dear <b>Navira</b>,<br>
+May your life be filled with happiness, success, and endless smiles.
+Keep shining and dreaming big ✨
+<br><br>
+<b>18 December 2013</b>
+</div>
+
+<div class="gift" id="gift"></div>
+
+<div class="controls">
+<button id="playMusic">🎵 Play Music</button>
+<button id="themeBtn">🎨 Change Theme</button>
+</div>
+
+<div class="calendar">
+<h3>December</h3>
+<div class="days">
+<div class="day">1</div><div class="day">2</div><div class="day">3</div>
+<div class="day">4</div><div class="day">5</div><div class="day">6</div>
+<div class="day">7</div><div class="day">8</div><div class="day">9</div>
+<div class="day">10</div><div class="day">11</div><div class="day">12</div>
+<div class="day">13</div><div class="day">14</div><div class="day">15</div>
+<div class="day">16</div><div class="day">17</div>
+<div class="day birthday">18 🎂</div>
+<div class="day">19</div><div class="day">20</div><div class="day">21</div>
+<div class="day">22</div><div class="day">23</div><div class="day">24</div>
+<div class="day">25</div><div class="day">26</div><div class="day">27</div>
+<div class="day">28</div><div class="day">29</div><div class="day">30</div>
+<div class="day">31</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<audio id="audio" loop></audio>
+
+<script>
+/* ===== ADD YOUR FILES HERE ===== */
+const defaultPhoto = "p2.jpg";
+const defaultMusic = "Happy Birthday Song Original 🎈🥳.mp3";
+
+/* Load photo & music */
+document.getElementById("photo").src = defaultPhoto;
+const audio = document.getElementById("audio");
+audio.src = defaultMusic;
+
+/* Music */
+document.getElementById("playMusic").onclick = ()=>audio.play();
+
+/* 🎁 Gift open */
+document.getElementById("gift").onclick = function(){
+    this.classList.add("opened");
+};
+
+/* 🎨 Theme change */
+const themes=[
+    ["#ff6ec4","#7873f5"],
+    ["#00c6ff","#0072ff"],
+    ["#f7971e","#ffd200"],
+    ["#11998e","#38ef7d"]
+];
+let t=0;
+document.getElementById("themeBtn").onclick=()=>{
+    t=(t+1)%themes.length;
+    document.documentElement.style.setProperty('--c1',themes[t][0]);
+    document.documentElement.style.setProperty('--c2',themes[t][1]);
+};
+
+/* 🎆 Fireworks */
+const c=document.getElementById("fireworks"),x=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+let p=[];
+function boom(){
+    for(let i=0;i<40;i++){
+        p.push({
+            x:Math.random()*c.width,
+            y:Math.random()*c.height/2,
+            dx:(Math.random()-0.5)*4,
+            dy:(Math.random()-0.5)*4,
+            life:60
+        });
+    }
+}
+function anim(){
+    x.clearRect(0,0,c.width,c.height);
+    p.forEach((b,i)=>{
+        x.fillStyle="rgba(255,255,255,0.8)";
+        x.fillRect(b.x,b.y,3,3);
+        b.x+=b.dx;b.y+=b.dy;b.life--;
+        if(b.life<=0)p.splice(i,1);
+    });
+    requestAnimationFrame(anim);
+}
+setInterval(boom,1200);
+anim();
+</script>
+
+</body>
+</html>
